@@ -1,4 +1,4 @@
-# 🪙 CryptoNest
+CryptoNest
 
 CryptoNest is a responsive cryptocurrency price tracking web application built with **React**, **Vite**, and **Material UI**. It uses the [CoinGecko API](https://www.coingecko.com/en/api) to provide real-time data on top cryptocurrencies by market cap, prices, historical charts, and more.
 
