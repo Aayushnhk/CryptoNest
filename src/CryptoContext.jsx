@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
-import { CoinList } from "./config/api"; // Make sure this file exists and exports CoinList
+import { CoinList } from "./config/api"; 
 
 const Crypto = createContext();
 
@@ -34,7 +34,7 @@ export const CryptoProvider = ({ children }) => {
         symbol,
         coins,
         loading,
-        fetchCoins, // ✅ Now you're providing this
+        fetchCoins, 
       }}
     >
       {children}

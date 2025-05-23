@@ -15,7 +15,7 @@ const darkTheme = createTheme({
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
-      <ThemeProvider theme={darkTheme}> {/* ✅ Wrap App with ThemeProvider */}
+      <ThemeProvider theme={darkTheme}> 
         <CryptoProvider>
           <App />
         </CryptoProvider>

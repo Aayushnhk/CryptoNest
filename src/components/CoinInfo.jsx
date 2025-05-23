@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { HistoricalChart } from "../config/api";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -12,7 +11,6 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-
 import {
   Box,
   CircularProgress,
@@ -25,7 +23,6 @@ import SelectButton from "./SelectButton";
 import { chartDays } from "../config/data";
 import { CryptoState } from "../CryptoContext";
 
-// ✅ Register Chart.js components
 ChartJS.register(
   LineElement,
   CategoryScale,
@@ -45,15 +42,25 @@ const CoinInfo = ({ coin }) => {
   const muiTheme = useTheme();
   const isMobile = useMediaQuery(muiTheme.breakpoints.down("md"));
 
+  const baseURL = import.meta.env.DEV
+    ? "/api"
+    : "https://api.coingecko.com/api/v3";
+
   const fetchHistoricData = async () => {
-    const { data } = await axios.get(`/api/coins/${coin.id}/market_chart?vs_currency=${currency}&days=${days}`);
-    setFlag(true);
-    setHistoricData(data.prices);
+    try {
+      const { data } = await axios.get(
+        `${baseURL}/coins/${coin.id}/market_chart?vs_currency=${currency}&days=${days}`
+      );
+      setHistoricData(data.prices);
+      setFlag(true);
+    } catch (error) {
+      console.error("Error fetching historical data:", error);
+    }
   };
 
   useEffect(() => {
     fetchHistoricData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    
   }, [days]);
 
   const darkTheme = createTheme({
@@ -89,7 +96,7 @@ const CoinInfo = ({ coin }) => {
         ) : (
           <>
             <Line
-              key={days} // ✅ Force chart to recreate on day change
+              key={days}
               data={{
                 labels: historicData.map((coin) => {
                   let date = new Date(coin[0]);
@@ -133,7 +140,6 @@ const CoinInfo = ({ coin }) => {
                 },
               }}
             />
-
             <Box
               sx={{
                 display: "flex",
