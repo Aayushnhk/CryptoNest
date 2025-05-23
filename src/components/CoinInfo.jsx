@@ -42,20 +42,10 @@ const CoinInfo = ({ coin }) => {
   const muiTheme = useTheme();
   const isMobile = useMediaQuery(muiTheme.breakpoints.down("md"));
 
-  const baseURL = import.meta.env.DEV
-    ? "/api"
-    : "https://api.coingecko.com/api/v3";
-
   const fetchHistoricData = async () => {
-    try {
-      const { data } = await axios.get(
-        `${baseURL}/coins/${coin.id}/market_chart?vs_currency=${currency}&days=${days}`
-      );
-      setHistoricData(data.prices);
-      setFlag(true);
-    } catch (error) {
-      console.error("Error fetching historical data:", error);
-    }
+    const { data } = await axios.get(`/api/coins/${coin.id}/market_chart?vs_currency=${currency}&days=${days}`);
+    setFlag(true);
+    setHistoricData(data.prices);
   };
 
   useEffect(() => {
